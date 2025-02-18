@@ -78,7 +78,7 @@
     },
     "serial": {
       "port": "str?",
-      "adapter": "match(zstack|deconz|zigate|ezsp|ember|zboss)?",
+      "adapter": "match(zstack|deconz|zigate|ezsp|ember|zboss|blz)?",
       "baudrate": "int?",
       "rtscts": "bool?"
     },

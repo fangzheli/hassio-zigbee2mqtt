@@ -84,5 +84,5 @@
     },
     "watchdog": "str?"
   },
-  "image": "zigbee2mqtt/zigbee2mqtt-edge-{arch}"
+  "image": "local/zigbee2mqtt-edge-{arch}"
 }

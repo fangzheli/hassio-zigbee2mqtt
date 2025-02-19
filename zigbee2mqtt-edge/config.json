@@ -84,5 +84,6 @@
     },
     "watchdog": "str?"
   },
-  "image": "local/zigbee2mqtt-edge-{arch}"
+  "build_from": "../../common",
+  "squash": false
 }

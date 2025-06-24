@@ -13,8 +13,16 @@ RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev
     npm install -g pnpm@10.4.1 && \
     if [ "${BUILD_VERSION}" = "edge" ]; \
     then \
-        echo "Installing Edge version" && \
+        echo "Installing Custom Edge version with custom zigbee-herdsman" && \
+        # Clone zigbee-herdsman
         git clone -b feat/blz --single-branch --depth 1 \
+        https://github.com/fangzheli/zigbee-herdsman.git /zigbee-herdsman && \
+        cd /zigbee-herdsman && \
+        pnpm install --frozen-lockfile && \
+        pnpm run build && \
+        cd / && \
+        # Clone zigbee2mqtt
+        git clone -b feat/blz-local-dev --single-branch --depth 1 \
         https://github.com/fangzheli/zigbee2mqtt.git /app && \
         mkdir /app/dist && \
         jq -n --arg commit $(eval cd /app;git rev-parse --short HEAD) '$commit' > /app/dist/.hash ; \

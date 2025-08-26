@@ -10,7 +10,7 @@ RUN apk add --no-cache socat tini nodejs eudev
 FROM base as dependencies_and_build
 
 RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev git python3 && \
-    npm install -g pnpm@10.4.1 && \
+    npm install -g pnpm@10.12.1 && \
     if [ "${BUILD_VERSION}" = "edge" ]; \
     then \
         echo "Installing Custom Edge version with custom zigbee-herdsman" && \
@@ -37,7 +37,6 @@ RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev
     fi; \
     echo "Installed Zigbee2MQTT @ version $(cat /app/dist/.hash)" && \
     cd /app && \
-    npm install -g $(jq -r '.packageManager' package.json) && \
     pnpm install --frozen-lockfile --no-optional --unsafe-perm && \
     pnpm run build && \
     rm -rf node_modules && \

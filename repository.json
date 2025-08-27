@@ -1,5 +1,5 @@
 {
-  "name": "Home Assistant Add-on: Zigbee2MQTT with BLZ support",
+  "name": "Home Assistant Add-on: Zigbee2MQTT with BLZ",
   "url": "https://github.com/fangzheli/hassio-zigbee2mqtt",
   "maintainer": "Frank Li"
 }

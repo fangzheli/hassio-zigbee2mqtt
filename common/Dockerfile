@@ -39,10 +39,18 @@ RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev
     fi; \
     echo "Installed Zigbee2MQTT @ version $(cat /app/dist/.hash)" && \
     cd /app && \
-    pnpm install --frozen-lockfile --no-optional --unsafe-perm && \
+    if [ "${BUILD_VERSION}" = "edge" ]; then \
+        pnpm install --no-optional --unsafe-perm; \
+    else \
+        pnpm install --frozen-lockfile --no-optional --unsafe-perm; \
+    fi && \
     pnpm run build && \
     rm -rf node_modules && \
-    pnpm install --frozen-lockfile --no-optional --unsafe-perm --prod && \
+    if [ "${BUILD_VERSION}" = "edge" ]; then \
+        pnpm install --no-optional --unsafe-perm --prod; \
+    else \
+        pnpm install --frozen-lockfile --no-optional --unsafe-perm --prod; \
+    fi && \
     # force serialport to rebuild on current platform instead of using prebuilds
     rm -rf `find ./node_modules/.pnpm/ -wholename "*/@serialport/bindings-cpp/prebuilds" -type d` && \
     pnpm rebuild @serialport/bindings-cpp

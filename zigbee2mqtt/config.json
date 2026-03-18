@@ -79,12 +79,12 @@
     },
     "serial": {
       "port": "str?",
-      "adapter": "match(zstack|deconz|zigate|ezsp|ember|zboss)?",
+      "adapter": "match(zstack|deconz|zigate|ezsp|ember|zboss|blz)?",
       "baudrate": "int?",
       "rtscts": "bool?"
     },
     "watchdog": "str?",
     "force_onboarding": "bool?"
   },
-  "image": "ghcr.io/zigbee2mqtt/zigbee2mqtt-{arch}"
+  "image": "ghcr.io/fangzheli/zigbee2mqtt-{arch}"
 }

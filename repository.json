@@ -1,5 +1,5 @@
 {
   "name": "Home Assistant App: Zigbee2MQTT with BLZ",
-  "url": "https://github.com/fangzheli/hassio-zigbee2mqtt",
-  "maintainer": "Frank Li"
+  "url": "https://github.com/pine64/hassio-zigbee2mqtt",
+  "maintainer": "Pine64"
 }

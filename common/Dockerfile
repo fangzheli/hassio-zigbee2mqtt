@@ -3,6 +3,7 @@ FROM $BUILD_FROM as base
 
 ENV LANG C.UTF-8
 ARG BUILD_VERSION
+ARG REPO_OWNER=fangzheli
 
 RUN apk add --no-cache socat tini nodejs eudev && \
     # Validation to confirm that curl is installed in the base image.
@@ -10,13 +11,14 @@ RUN apk add --no-cache socat tini nodejs eudev && \
 
 # Dependencies and build
 FROM base as dependencies_and_build
+ARG REPO_OWNER=fangzheli
 
 RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev git python3 && \
     npm install -g pnpm@10.12.1 && \
     # Both edge and stable use the BLZ fork of zigbee-herdsman
     echo "Installing BLZ zigbee-herdsman" && \
     git clone -b feat/blz --single-branch --depth 1 \
-        https://github.com/fangzheli/zigbee-herdsman.git /zigbee-herdsman && \
+        https://github.com/${REPO_OWNER}/zigbee-herdsman.git /zigbee-herdsman && \
     cd /zigbee-herdsman && \
     pnpm install && \
     pnpm run build && \
@@ -25,13 +27,13 @@ RUN apk add --no-cache --virtual .buildtools npm make gcc g++ linux-headers udev
     then \
         echo "Installing Edge version from BLZ branch" && \
         git clone -b feat/blz-local-dev --single-branch --depth 1 \
-        https://github.com/fangzheli/zigbee2mqtt.git /app && \
+        https://github.com/${REPO_OWNER}/zigbee2mqtt.git /app && \
         mkdir /app/dist && \
         jq -n --arg commit $(eval cd /app;git rev-parse --short HEAD) '$commit' > /app/dist/.hash ; \
     else \
         echo "Installing Stable BLZ version ${BUILD_VERSION%-*}" && \
         git clone -b feat/blz-local-dev --single-branch --depth 1 \
-        https://github.com/fangzheli/zigbee2mqtt.git /app && \
+        https://github.com/${REPO_OWNER}/zigbee2mqtt.git /app && \
         mkdir /app/dist && \
         jq -n --arg commit ${BUILD_VERSION%-*} '$commit' > /app/dist/.hash ; \
     fi; \
